@@ -12,7 +12,8 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Users, Plus, Search, Phone, Mail, MapPin, Pencil, Trash2, CalendarDays, Clock } from 'lucide-react';
+import { TimePicker } from '@/components/ui/time-picker';
+import { Users, Plus, Search, Phone, Mail, MapPin, Pencil, Trash2, CalendarDays } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -279,32 +280,20 @@ export default function PatientsPage() {
                         </Popover>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="appt_start" className="flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5" />
-                            Start Time *
-                          </Label>
-                          <Input
-                            id="appt_start"
-                            type="time"
-                            value={apptForm.start_time}
-                            onChange={(e) => setApptForm({ ...apptForm, start_time: e.target.value })}
-                            required={scheduleAppt}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="appt_end" className="flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5" />
-                            End Time *
-                          </Label>
-                          <Input
-                            id="appt_end"
-                            type="time"
-                            value={apptForm.end_time}
-                            onChange={(e) => setApptForm({ ...apptForm, end_time: e.target.value })}
-                            required={scheduleAppt}
-                          />
-                        </div>
+                        <TimePicker
+                          id="appt_start"
+                          label="Start Time *"
+                          value={apptForm.start_time}
+                          onChange={(v) => setApptForm({ ...apptForm, start_time: v })}
+                          required={scheduleAppt}
+                        />
+                        <TimePicker
+                          id="appt_end"
+                          label="End Time *"
+                          value={apptForm.end_time}
+                          onChange={(v) => setApptForm({ ...apptForm, end_time: v })}
+                          required={scheduleAppt}
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="appt_notes">Treatment Notes</Label>

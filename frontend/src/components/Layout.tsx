@@ -23,7 +23,7 @@ export default function Layout() {
     { to: '/patients', label: 'Patients', icon: Users },
     { to: '/appointments', label: 'Appointments', icon: CalendarDays },
     ...(user?.role === 'Admin'
-      ? [{ to: '/register', label: 'Add User', icon: UserPlus }]
+      ? [{ to: '/register', label: 'Users', icon: UserPlus }]
       : []),
   ];
 

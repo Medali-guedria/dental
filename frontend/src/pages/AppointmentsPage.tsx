@@ -12,6 +12,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
   DialogFooter, DialogDescription,
 } from '@/components/ui/dialog';
+import { TimePicker } from '@/components/ui/time-picker';
 import { CalendarDays, Plus, Search, Clock, Pencil, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -257,14 +258,20 @@ export default function AppointmentsPage() {
               <Input id="date" type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} required />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="start_time">Start Time *</Label>
-                <Input id="start_time" type="time" value={form.start_time} onChange={(e) => setForm({ ...form, start_time: e.target.value })} required />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="end_time">End Time *</Label>
-                <Input id="end_time" type="time" value={form.end_time} onChange={(e) => setForm({ ...form, end_time: e.target.value })} required />
-              </div>
+              <TimePicker
+                id="start_time"
+                label="Start Time *"
+                value={form.start_time}
+                onChange={(v) => setForm({ ...form, start_time: v })}
+                required
+              />
+              <TimePicker
+                id="end_time"
+                label="End Time *"
+                value={form.end_time}
+                onChange={(v) => setForm({ ...form, end_time: v })}
+                required
+              />
             </div>
             <div className="space-y-2">
               <Label>Status</Label>
