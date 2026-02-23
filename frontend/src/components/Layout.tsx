@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import {
   Stethoscope,
+  Home,
   Users,
   CalendarDays,
   UserPlus,
@@ -20,6 +21,7 @@ export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navItems = [
+    { to: '/accueil', label: 'Accueil', icon: Home },
     { to: '/patients', label: 'Patients', icon: Users },
     { to: '/appointments', label: 'Appointments', icon: CalendarDays },
     ...(user?.role === 'Admin'

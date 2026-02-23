@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import Layout from '@/components/Layout';
 import LoginPage from '@/pages/LoginPage';
+import AccueilPage from '@/pages/AccueilPage';
 import PatientsPage from '@/pages/PatientsPage';
 import AppointmentsPage from '@/pages/AppointmentsPage';
 import RegisterPage from '@/pages/RegisterPage';
@@ -22,12 +23,12 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 function PublicRoute({ children }: { children: ReactNode }) {
   const { user, isLoading } = useAuth();
   if (isLoading) return null;
-  return user ? <Navigate to="/patients" replace /> : <>{children}</>;
+  return user ? <Navigate to="/accueil" replace /> : <>{children}</>;
 }
 
 function AdminRoute({ children }: { children: ReactNode }) {
   const { user } = useAuth();
-  if (user?.role !== 'Admin') return <Navigate to="/patients" replace />;
+  if (user?.role !== 'Admin') return <Navigate to="/accueil" replace />;
   return <>{children}</>;
 }
 
@@ -38,7 +39,8 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
           <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-            <Route index element={<Navigate to="/patients" replace />} />
+            <Route index element={<Navigate to="/accueil" replace />} />
+            <Route path="/accueil" element={<AccueilPage />} />
             <Route path="/patients" element={<PatientsPage />} />
             <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="/register" element={<AdminRoute><RegisterPage /></AdminRoute>} />

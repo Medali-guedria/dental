@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { Calendar } from '@/components/ui/calendar';
+import { PatientDetailDialog } from '@/components/PatientDetailDialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { TimePicker } from '@/components/ui/time-picker';
 import { Users, Plus, Search, Phone, Mail, MapPin, Pencil, Trash2, CalendarDays } from 'lucide-react';
@@ -24,6 +25,7 @@ interface Patient {
   email: string | null;
   address: string | null;
   notes: string | null;
+  visits_count?: number;
 }
 
 const emptyForm = { full_name: '', phone: '', email: '', address: '', notes: '' };
@@ -41,6 +43,8 @@ export default function PatientsPage() {
   const [error, setError] = useState('');
   const [scheduleAppt, setScheduleAppt] = useState(false);
   const [apptForm, setApptForm] = useState(emptyApptForm);
+  const [detailOpen, setDetailOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
 
   const fetchPatients = async () => {
     try {
@@ -162,7 +166,15 @@ export default function PatientsPage() {
             <Card key={p.id} className="group hover:shadow-md transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
-                  <CardTitle className="text-base">{p.full_name}</CardTitle>
+                  <CardTitle
+                    className="text-base cursor-pointer hover:text-primary hover:underline"
+                    onClick={() => {
+                      setSelectedPatient(p);
+                      setDetailOpen(true);
+                    }}
+                  >
+                    {p.full_name}
+                  </CardTitle>
                   <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(p)}>
                       <Pencil className="w-3.5 h-3.5" />
@@ -320,6 +332,20 @@ export default function PatientsPage() {
           </form>
         </DialogContent>
       </Dialog>
+
+      {selectedPatient && (
+        <PatientDetailDialog
+          open={detailOpen}
+          onOpenChange={setDetailOpen}
+          patient={selectedPatient}
+          onUpdated={(updated) => {
+            setPatients((prev) =>
+              prev.map((x) => (x.id === updated.id ? updated : x))
+            );
+            setSelectedPatient(updated);
+          }}
+        />
+      )}
     </div>
   );
 }

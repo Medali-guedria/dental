@@ -25,9 +25,13 @@ function initialize() {
       phone TEXT NOT NULL,
       email TEXT,
       address TEXT,
-      notes TEXT
+      notes TEXT,
+      visits_count INTEGER DEFAULT 0
     )
   `);
+  try {
+    db.exec('ALTER TABLE patients ADD COLUMN visits_count INTEGER DEFAULT 0');
+  } catch (_) { /* column already exists */ }
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS appointments (

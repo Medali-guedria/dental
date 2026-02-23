@@ -16,6 +16,24 @@ router.get('/', (req, res) => {
   res.json(appointments);
 });
 
+router.get('/today', (req, res) => {
+  const today = new Date().toISOString().slice(0, 10);
+  const appointments = db.prepare(`
+    SELECT a.*,
+      p.id AS patient_id,
+      p.full_name AS patient_name,
+      p.phone AS patient_phone,
+      p.email AS patient_email,
+      p.address AS patient_address,
+      p.notes AS patient_notes
+    FROM appointments a
+    JOIN patients p ON a.patient_id = p.id
+    WHERE a.date = ?
+    ORDER BY a.start_time ASC
+  `).all(today);
+  res.json(appointments);
+});
+
 router.get('/:id', (req, res) => {
   const appointment = db.prepare(`
     SELECT a.*, p.full_name AS patient_name
