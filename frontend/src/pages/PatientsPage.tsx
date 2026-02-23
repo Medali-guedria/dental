@@ -163,19 +163,18 @@ export default function PatientsPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((p) => (
-            <Card key={p.id} className="group hover:shadow-md transition-shadow">
+            <Card
+              key={p.id}
+              className="group hover:shadow-md transition-all cursor-pointer hover:border-primary/30"
+              onClick={() => {
+                setSelectedPatient(p);
+                setDetailOpen(true);
+              }}
+            >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
-                  <CardTitle
-                    className="text-base cursor-pointer hover:text-primary hover:underline"
-                    onClick={() => {
-                      setSelectedPatient(p);
-                      setDetailOpen(true);
-                    }}
-                  >
-                    {p.full_name}
-                  </CardTitle>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <CardTitle className="text-base">{p.full_name}</CardTitle>
+                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity" onClick={(e) => e.stopPropagation()}>
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEdit(p)}>
                       <Pencil className="w-3.5 h-3.5" />
                     </Button>

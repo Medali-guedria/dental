@@ -243,7 +243,14 @@ export function PatientDetailDialog({
               {patient.email && (
                 <div className="flex items-center gap-3 text-sm">
                   <Mail className="w-4 h-4 shrink-0 text-muted-foreground" />
-                  <span>{patient.email}</span>
+                  <a
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(patient.email)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline cursor-pointer truncate"
+                  >
+                    {patient.email}
+                  </a>
                 </div>
               )}
               {patient.address && (

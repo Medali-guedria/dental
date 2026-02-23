@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { PatientDetailDialog, type PatientData } from '@/components/PatientDetailDialog';
 import { Search, Home, Phone, Mail, MapPin, Clock, FileText } from 'lucide-react';
 import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
 
 interface TodayAppointment {
   id: number;
@@ -135,7 +134,14 @@ export default function AccueilPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((a) => (
-            <Card key={a.id} className="overflow-hidden">
+            <Card
+              key={a.id}
+              className="overflow-hidden cursor-pointer hover:shadow-md hover:border-primary/30 transition-all"
+              onClick={() => {
+                setSelectedAppointment(a);
+                setDetailOpen(true);
+              }}
+            >
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-3 min-w-0">
@@ -143,16 +149,7 @@ export default function AccueilPage() {
                       {a.patient_name.charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <CardTitle
-                        className={cn(
-                          "text-base truncate",
-                          "cursor-pointer hover:text-primary hover:underline"
-                        )}
-                        onClick={() => {
-                          setSelectedAppointment(a);
-                          setDetailOpen(true);
-                        }}
-                      >
+                      <CardTitle className="text-base truncate">
                         {a.patient_name}
                       </CardTitle>
                       <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-0.5">
